@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: udacity-restapi-user
+  labels:
+    app: udacity-restapi-user
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: udacity-restapi-user
+  template:
+    metadata:
+      labels:
+        app: udacity-restapi-user
+    spec:
+      containers:
+      - name: udacity-restapi-user
+        image: sdiker/udacity-restapi-user
+        ports:
+        - containerPort: 80
+        env:
+        - name: POSTGRESS_USERNAME
+          valueFrom:
+            configMapKeyRef:
+               name: env-secret
+               key:  POSTGRESS_USERNAME
+        - name: POSTGRESS_PASSWORD
+          valueFrom:
+             configMapKeyRef:
+               name: env-secret
+               key:  POSTGRESS_PASSWORD
+        - name: POSTGRESS_DATABASE
+          valueFrom:
+             configMapKeyRef:
+               name: env-config
+               key: POSTGRESS_DATABASE
+        - name: POSTGRESS_HOST
+          valueFrom:
+             configMapKeyRef:
+               name: env-config
+               key: POSTGRESS_HOST
+        - name: AWS_REGION
+          valueFrom:
+             configMapKeyRef:
+               name: env-config
+               key: AWS_REGION
+        - name: AWS_PROFILE
+          valueFrom:
+             configMapKeyRef:
+               name: env-config
+               key: AWS_PROFILE
+        - name: AWS_MEDIA_BUCKET
+          valueFrom:
+             configMapKeyRef:
+               name: env-config
+               key: AWS_MEDIA_BUCKET
+        - name: JWT_SECRET
+          valueFrom:
+             configMapKeyRef:
+               name: env-config
+               key: JWT_SECRET

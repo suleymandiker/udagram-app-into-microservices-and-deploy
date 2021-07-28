@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: udacity-frontend
+  labels:
+    app: udacity-frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: udacity-frontend
+  template:
+    metadata:
+      labels:
+        app: udacity-frontend
+    spec:
+      containers:
+      - name: udacity-frontend
+        image: sdiker/udacity-frontend
+        ports:
+        - containerPort: 80
+        env:
+        - name: POSTGRESS_USERNAME
+          value: "originallife"
+        - name: POSTGRESS_PASSWORD
+          value: "originallife"
+        - name: POSTGRESS_DATABASE
+          value: "postgres"
+        - name: POSTGRESS_HOST
+          value: "cdr.cx5hqfwzynaf.us-east-1.rds.amazonaws.com"
+        - name: AWS_REGION
+          value: "eu-east-1"
+        - name: AWS_PROFILE
+          value: "default"
+        - name: AWS_MEDIA_BUCKET
+          value: "test-982235441336-dev"
+        - name: JWT_SECRET
+          value: "FJAEKFJLKSJEAKEKAJFFAIQOE"
